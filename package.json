@@ -1,0 +1,14 @@
+{
+  "name": "ivoirehub-site",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "mysql2": "^3.9.7"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  },
+  "scripts": {
+    "dev": "netlify dev"
+  }
+}

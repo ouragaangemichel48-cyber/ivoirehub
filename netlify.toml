@@ -1,0 +1,19 @@
+# netlify.toml
+# Configuration Netlify : build du site statique + dossier des functions
+
+[build]
+  # Dossier publié tel quel (contient ton index.html)
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  # mysql2 doit être bundlé avec la function
+  node_bundler = "esbuild"
+
+# Redirection pratique : /api/xxx -> /.netlify/functions/api?action=xxx
+# Optionnel, mais évite d'exposer le chemin complet ".netlify/functions" au front
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api?action=:splat"
+  status = 200
+  force = true
