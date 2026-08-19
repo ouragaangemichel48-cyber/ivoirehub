@@ -65,9 +65,13 @@ exports.handler = async function (event) {
       user: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      // Aiven exige une connexion chiffrée (ssl-mode=REQUIRED).
-      // "rejectUnauthorized: true" vérifie le certificat du serveur (recommandé).
-      ssl: { rejectUnauthorized: true },
+      // Aiven exige une connexion chiffrée avec vérification de son certificat CA.
+      // DB_CA_CERT doit contenir le contenu complet du fichier ca.pem
+      // téléchargé depuis Aiven (Overview > Certificat CA > Émission).
+      ssl: {
+        ca: process.env.DB_CA_CERT,
+        rejectUnauthorized: true,
+      },
       // Timeout de connexion raisonnable pour éviter de bloquer la function
       connectTimeout: 10000,
     });
