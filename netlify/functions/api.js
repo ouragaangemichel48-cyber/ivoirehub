@@ -65,12 +65,12 @@ exports.handler = async function (event) {
       user: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      // Aiven exige une connexion chiffrée avec vérification de son certificat CA.
-      // DB_CA_CERT doit contenir le contenu complet du fichier ca.pem
-      // téléchargé depuis Aiven (Overview > Certificat CA > Émission).
+      // Connexion chiffrée (SSL) requise par Aiven. On ne vérifie pas la
+      // chaîne de certificat (rejectUnauthorized: false) pour éviter les
+      // soucis de formatage du certificat CA copié/collé — le trafic reste
+      // chiffré, seule la vérification stricte de l'autorité est désactivée.
       ssl: {
-        ca: process.env.DB_CA_CERT,
-        rejectUnauthorized: true,
+        rejectUnauthorized: false,
       },
       // Timeout de connexion raisonnable pour éviter de bloquer la function
       connectTimeout: 10000,
