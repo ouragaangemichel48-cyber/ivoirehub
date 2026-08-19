@@ -61,11 +61,14 @@ exports.handler = async function (event) {
     // ---------------------------------------------------------------------
     connection = await mysql.createConnection({
       host: process.env.DB_HOST,
+      port: process.env.DB_PORT || 3306,
       user: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      // InfinityFree ferme parfois les connexions inactives : on met un
-      // timeout de connexion raisonnable pour éviter de bloquer la function
+      // Aiven exige une connexion chiffrée (ssl-mode=REQUIRED).
+      // "rejectUnauthorized: true" vérifie le certificat du serveur (recommandé).
+      ssl: { rejectUnauthorized: true },
+      // Timeout de connexion raisonnable pour éviter de bloquer la function
       connectTimeout: 10000,
     });
 
